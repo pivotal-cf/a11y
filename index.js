@@ -6,6 +6,10 @@ var objectAssign = require('object-assign');
 var protocolify = require('protocolify');
 
 module.exports = function (url, opts, cb) {
+    var enginePath = phantomjs.path;
+    if(opts.enginePath) {
+        enginePath = opts.enginePath;
+    }
     if (typeof opts !== 'object') {
         cb = opts;
         opts = {};
@@ -30,7 +34,7 @@ module.exports = function (url, opts, cb) {
         height: viewportSize[1] || 768
     });
 
-    execFile(phantomjs.path, [
+    execFile(enginePath, [
         path.join(__dirname, 'audits.js'),
         JSON.stringify(opts),
         '--ignore-ssl-errors=true',
